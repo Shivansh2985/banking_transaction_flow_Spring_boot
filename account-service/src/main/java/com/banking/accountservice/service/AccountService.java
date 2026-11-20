@@ -73,6 +73,10 @@ public class AccountService {
         log.info("Account Blocked for Account Number: {}", accountNumber);
     }
 
+    /*
+     * Deduct balance
+     * Called by Transaction Service
+     * */
     public void deductBalance(String accountNumber, BigDecimal amount) {
         log.info("Deducting Balance {} for Account Number: {}", amount, accountNumber);
         Account account = accountRepository.findByAccountNumber(accountNumber)
@@ -90,6 +94,24 @@ public class AccountService {
         accountRepository.save(account);
         log.info("Balance Deducted and New Balance is: {}", account.getBalance());
     }
+
+    /*
+    * Credit balance
+    * Called by Transaction Service via Kafka
+    * */
+    public void creditBalance(String accountNumber, BigDecimal amount) {
+        log.info("Crediting Balance {} for Account Number: {}", amount, accountNumber);
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new RuntimeException("Account Not Found"));
+
+        if(account.getAccountStatus() != AccountStatus.ACTIVE) {
+            throw new RuntimeException("Account Status Not Active"+accountNumber);
+        }
+        account.setBalance(account.getBalance().add(amount));
+        accountRepository.save(account);
+        log.info("Balance Credited and New Balance is: {}", account.getBalance());
+    }
+
 
     private String generateAccountNumber() {
         String accountNum;
