@@ -1,4 +1,8 @@
+
+# Maven build output
 target/
+
+# Maven generated files
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -7,11 +11,30 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-# https://maven.apache.org/tools/wrapper/#Usage_with_or_without_Binary_JAR
-.mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
+# Maven Wrapper JAR (optional)
+# Keep this ignored only if you intentionally don't want to commit it.
+# .mvn/wrapper/maven-wrapper.jar
+
+# Eclipse IDE
 .project
-# JDT-specific (Eclipse Java Development Tools)
 .classpath
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Java compiled files
+*.class
